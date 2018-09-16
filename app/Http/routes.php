@@ -15,6 +15,7 @@ use App\User;
 use App\Rule;
 use App\Country;
 use App\Photo;
+use App\Tag;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -94,4 +95,18 @@ Route::get('/post/{id}/photos',function($id){
 });
 Route::get('/photo/{id}/owner',function($id){
     return Photo::findOrFail($id)->imageable;
+});
+Route::get('/post/{id}/tags',function($id){
+    $post  = Post::find($id);
+    foreach($post->tags as $tag)
+    {
+        return $tag->name;
+    }
+});
+Route::get('/tag/{id}/owner',function($id){
+    $tag = Tag::find($id);
+    foreach($tag->posts as $post)
+    {
+        return $post->content;
+    }
 });
