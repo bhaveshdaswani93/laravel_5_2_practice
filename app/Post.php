@@ -10,6 +10,7 @@ class Post extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at']
     ;
+    public $directory = "/images/";
     //
     public function user()
     {
@@ -25,8 +26,16 @@ class Post extends Model
     }
 
     protected $fillable = [
-        'title','content'
+        'title','content','path'
     ];
+
+    public static function scopeGetPost($query) {
+        return $query->orderBy('id','desc');
+    }
+    
+    public function getPathAttribute($value) {
+        return $this->directory.$value;
+    }
 
     
 }

@@ -16,6 +16,7 @@ use App\Rule;
 use App\Country;
 use App\Photo;
 use App\Tag;
+use Carbon\Carbon;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -112,6 +113,27 @@ use App\Tag;
 // });
 
 Route::resource('posts','PostController');
+Route::get('/dates',function(){
+    $date = new DateTime();
+    echo $date->format('m-d-Y');
+    echo "<br>";
+    echo Carbon::now();
+    echo "<br>";
+    echo Carbon::now()->subMonths(2)->diffforHumans();
+    echo "<br>";
+    echo Carbon::now()->addDays(3)->diffforHumans();
+    echo "<br>";
+    echo Carbon::now()->subDays(6);
+});
+Route::get('/getName',function(){
+    $user =  User::findOrFail(1);
+    return $user->name;
+});
+Route::get('/setName',function(){
+    $user = User::findOrFail(1);
+    $user->name = 'test user mutator';
+    echo $user->save();
+});
 // Route::group(['middleware'=>'web'],function(){
 //     Route::resource('posts','PostController');
 // });
